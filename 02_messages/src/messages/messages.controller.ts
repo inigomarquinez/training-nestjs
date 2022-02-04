@@ -1,6 +1,6 @@
 import { Controller, Get, Post } from '@nestjs/common';
 
-@Controller('messages')
+@Controller('/messages')
 export class MessagesController {
   @Get()
   listMessages() {
