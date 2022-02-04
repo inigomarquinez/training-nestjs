@@ -43,8 +43,13 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Generating new modules using Nest CLI
+## Nest CLI useful commands
 
+### [nest generate](https://docs.nestjs.com/cli/usages#nest-generate)
 ```bash
+# Generate an empty module called `messages``
 nest generate module messages
+
+# Add `messages` controller and connect it to `messages` module
+nest generate controller messages/messages --flat
 ```
