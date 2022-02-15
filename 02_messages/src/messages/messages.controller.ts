@@ -5,12 +5,11 @@ import { CreateMessageDto } from './dtos/create-message.dto';
 
 @Controller('/messages')
 export class MessagesController {
-  messagesService: MessagesService;
-
-  constructor() {
+  constructor(public messagesService: MessagesService) {
     // Controller is creating its own dependencies
     // DON'T DO THIS ON A REAL APP!
-    this.messagesService = new MessagesService();
+    // this.messagesService = new MessagesService();
+    // USE DEPENDENCY INJECTION INSTEAD! (INVERSION OF CONTROL PRINCIPLE)
   }
 
   @Get()
