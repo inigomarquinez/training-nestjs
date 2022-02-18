@@ -61,8 +61,8 @@ $ npm run test:cov
 
 ```mermaid
   graph TD;
-      Computer Module-->CPU Module;
-      Computer Module-->Disk Module;
-      CPU Module-->Power Module;
-      Disk Module-->Power Module;
+      A[Computer Module] --> B[CPU Module];
+      A[Computer Module] --> C[Disk Module];
+      B[CPU Module] --> D[Power Module];
+      C[Disk Module] --> D[Power Module];
 ```
