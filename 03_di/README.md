@@ -38,31 +38,57 @@ $ npm run test:cov
 
 - First, generate the **modules**:
 
-    ```bash
-    nest generate module computer
-    nest generate module cpu
-    nest generate module disk
-    nest generate module power
-    ```
+  ```bash
+  nest generate module computer
+  nest generate module cpu
+  nest generate module disk
+  nest generate module power
+  ```
 
 - Then, generate the **services**:
 
-    ```bash
-    nest generate service cpu
-    nest generate service power
-    nest generate service disk
-    ```
+  ```bash
+  nest generate service cpu
+  nest generate service power
+  nest generate service disk
+  ```
 
 - Finally, generate the **controller**:
 
-    ```bash
-    nest generate controller computer
-    ```
+  ```bash
+  nest generate controller computer
+  ```
+
+## App diagram
 
 ```mermaid
-  graph TD;
-      A[Computer Module] --> B[CPU Module];
-      A[Computer Module] --> C[Disk Module];
-      B[CPU Module] --> D[Power Module];
-      C[Disk Module] --> D[Power Module];
+  flowchart TB
+    subgraph A[Computer Module]
+      subgraph A1[Computer Controller]
+        a["run()"]
+      end
+    end
+
+    subgraph B[CPU Module]
+      subgraph B1[CPU Service]
+        b["compute()"]
+      end
+    end
+
+    subgraph C[Disk Module]
+      subgraph C1[Disk Service]
+        c["getData()"]
+      end
+    end
+
+    subgraph D[Power Module]
+      subgraph D1[Power Service]
+        d["supplyPower()"]
+      end
+    end
+
+    A --> B
+    A --> C
+    B --> D
+    C --> D
 ```
