@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity() // This tells TypeORM that this class is an entity and should be persisted to the database as a table
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn() // This tells TypeORM that this property is the primary key of the table and will be automatically generated
   id: number;
 
-  @Column()
+  @Column() // This tells TypeORM that this property is a column of type string
   email: string;
 
-  @Column()
+  @Column() // This tells TypeORM that this property is a column of type string
   password: string;
 }

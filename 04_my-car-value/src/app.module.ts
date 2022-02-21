@@ -15,6 +15,9 @@ import { Report } from './reports/report.entity';
       type: 'sqlite',
       database: 'db.sqlite',
       entities: [User, Report],
+      // The synchronize feature of TypeORM will take care of updating the database schema.
+      // ONLY USE IT IN DEVELOPMENT ENVIRONMENT!!!
+      // In production, you should use migrations instead.
       synchronize: true
     })],
   controllers: [AppController],
