@@ -28,7 +28,7 @@ export class UsersService {
   }
 
   async update(id: number, attrs: Partial<User>) {
-    const user = await this.findeOne(id);
+    const user = await this.findOne(id);
 
     if (!user) {
       throw new Error('User not found');
@@ -44,7 +44,7 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = await this.findeOne(id);
+    const user = await this.findOne(id);
 
     if (!user) {
       throw new Error('User not found');
