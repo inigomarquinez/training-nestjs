@@ -18,4 +18,42 @@ export class UsersService {
 
     return this.repo.save(user);
   }
+
+  findOne(id: number) {
+    return this.repo.findOne(id);
+  }
+
+  find(email: string) {
+    return this.repo.find({ email });
+  }
+
+  async update(id: number, attrs: Partial<User>) {
+    const user = await this.findeOne(id);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    Object.assign(user, attrs);
+
+    return this.repo.save(user); // hooks called!!!
+
+    // If we used `update(plainObject)` instead of `save(Entity)`, the hooks wouldn't be triggered.
+    // On the other hand, it would be a one-trip to the database.
+    // return this.repo.update(id, attrs);
+  }
+
+  async remove(id: number) {
+    const user = await this.findeOne(id);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return this.repo.remove(user); // hooks called!!!
+
+    // If we used `delete(plainObject)` instead of `remove(Entity)`, the hooks wouldn't be triggered.
+    // On the other hand, it would be a one-trip to the database.
+    // return this.repo.delete(id);
+  }
 }
