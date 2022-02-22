@@ -9,8 +9,12 @@ export class UsersService {
 
   create(email: string, password: string) {
     // We create the user instance instead of saving it directly to the database
-    // just in case we want to run some validation logic defined in the User entity before saving it
+    // just in case we want to run some validation logic defined in the User entity before saving it.
+    // Another example would be that by creating the instance, hooks defined in the User entity will be executed.
     const user = this.repo.create({ email, password });
+
+    // If we use the save method directly with a plain object instead of an Entity instance, validation or hooks won't be executed.
+    // return this.repo.save({ email, password});
 
     return this.repo.save(user);
   }
