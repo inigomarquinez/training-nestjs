@@ -16,6 +16,7 @@ export class User {
   email: string;
 
   @Column() // This tells TypeORM that this property is a column of type string
+  // @Exclude() // This decorator would be used along with @UseInterceptors(ClassSerializerInterceptor) in the controller
   password: string;
 
   @AfterInsert()
