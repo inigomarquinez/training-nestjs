@@ -17,6 +17,7 @@ import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 
 @Controller('auth')
+@Serialize(UserDto)
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
@@ -33,9 +34,8 @@ export class UsersController {
    * Downside: if we have two different route handlers (one for admin and one public) that should return a different
    * amount of properties for a user entity, this solution won't work. It doesn't scale properly.
    * 
-   * Alternative: create a custom interceptor (similar to middleware) => SerializeInterceptor wrapped in a custom decorator
+   * Alternative: create a custom interceptor (SerializeInterceptor) =>  wrap in a custom decorator (Serialize) => apply to all routes (controller level)
    */
-  @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string) { // every single part of the URL is a string! We'll need to parse the id into a number
     const user = await this.usersService.findOne(parseInt(id));
