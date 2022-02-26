@@ -30,6 +30,11 @@ export class UsersController {
     this.authService.signup(body.email, body.password);
   }
 
+  @Post('/signin')
+  signin(@Body() body: CreateUserDto) {
+    return this.authService.signin(body.email, body.password);
+  }
+
   /*
    * Recommendation of NestJS docs to avoid sending fields marked as @Exclude() in the user entity:
    *
