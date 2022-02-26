@@ -3,8 +3,13 @@ import { plainToInstance } from "class-transformer";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
+// This is an interface that means any class
+interface ClassConstructor {
+  new (...args: any[]): {}
+}
+
 // Create a custom decorator (plain function) to wrap the interceptor functionality
-export function Serialize(dto: any) {
+export function Serialize(dto: ClassConstructor) {
   return UseInterceptors(new SerializeInterceptor(dto));
 }
 
