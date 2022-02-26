@@ -8,6 +8,7 @@ Content-Type: application/json
   "password": "password"
 }
 
+
 ### Sign in with a given email and password
 
 POST http://localhost:3000/auth/signin
@@ -18,21 +19,31 @@ Content-Type: application/json
   "password": "password"
 }
 
-### Find a particular user with a given ID
 
-GET http://localhost:3000/auth/1
+### Sign out
+
+POST http://localhost:3000/auth/signout
+
 
 ### Get the currently signed in user
 
 GET http://localhost:3000/auth/whoami
 
+
+### Find a particular user with a given ID
+
+GET http://localhost:3000/auth/1
+
+
 ### Find all users with with a given ID
 
 GET http://localhost:3000/auth?email=test@domain.com
 
+
 ### Delete a user with a given ID
 
 DELETE http://localhost:3000/auth/2
+
 
 ### Update a user with a given ID
 
