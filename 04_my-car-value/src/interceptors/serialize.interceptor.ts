@@ -1,7 +1,7 @@
-import { CallHandler, ExecutionContext, NestInterceptor, UseInterceptors } from "@nestjs/common";
-import { plainToInstance } from "class-transformer";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { CallHandler, ExecutionContext, NestInterceptor, UseInterceptors } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // This is an interface that means any class
 interface ClassConstructor {
