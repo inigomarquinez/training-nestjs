@@ -4,8 +4,8 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "email": "test@domain.com",
-  "password": "secret"
+  "email": "test@test.com",
+  "password": "password"
 }
 
 ### Sign in with a given email and password
@@ -14,8 +14,8 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-  "email": "test@domain.com",
-  "password": "secret"
+  "email": "test@test.com",
+  "password": "password"
 }
 
 ### Find a particular user with a given ID
