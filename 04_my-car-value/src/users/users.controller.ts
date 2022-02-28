@@ -12,27 +12,44 @@ import {
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
+import { User } from './user.entity';
 import { UsersService } from './users.service';
 
 @Controller('auth')
 @Serialize(UserDto)
+/**
+ * Two ways off adding the CurrentUserInterceptor to the controller:
+ * 
+ * 1. Controller scoped (downside: we need to manually add it to all the controllers that need the interceptor):
+ * @UseInterceptors(CurrentUserInterceptor)
+ * 
+ * 2. Globaly scoped (downside: perhaps there are controllers that don't need it but anyway they will run it)
+ * 
+ * In both cases, we need to add it in the users module.
+ */
 export class UsersController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService
   ) {}
 
-  @Get('/whoami')
-  async whoAmI(@Session() session: any) {
-    const user = await this.usersService.findOne(session.userId);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+  // @Get('/whoami')
+  // async whoAmI(@Session() session: any) {
+  //   const user = await this.usersService.findOne(session.userId);
+  //   if (!user) {
+  //     throw new NotFoundException('User not found');
+  //   }
 
+  //   return user;
+  // }
+
+  @Get('/whoami')
+  async whoAmI(@CurrentUser() user: User) {
     return user;
   }
 
