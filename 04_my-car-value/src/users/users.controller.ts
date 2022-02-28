@@ -8,9 +8,11 @@ import {
   Post,
   Query,
   NotFoundException,
-  Session
+  Session,
+  UseGuards
 } from '@nestjs/common';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { AuthGuard } from '../guards/auth.guard';
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 
@@ -38,6 +40,7 @@ export class UsersController {
     private authService: AuthService
   ) {}
 
+  // This endpoint uses @Session() decorator to get the logged in user
   // @Get('/whoami')
   // async whoAmI(@Session() session: any) {
   //   const user = await this.usersService.findOne(session.userId);
@@ -48,7 +51,9 @@ export class UsersController {
   //   return user;
   // }
 
+  // Same endpoint as above but using custom @CurrentUser() decorator and custom @AuthGuard() guard
   @Get('/whoami')
+  @UseGuards(AuthGuard)
   async whoAmI(@CurrentUser() user: User) {
     return user;
   }
