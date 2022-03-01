@@ -2,8 +2,7 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
-import { async } from 'rxjs';
-
+import { BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -45,23 +44,27 @@ describe('AuthService', () => {
     expect(hash).toBeDefined();
   });
 
-  it('throws an error if user signs up with an email that is in use', (done) => {
+  it('throws an error if user signs up with an email that is in use', async () => {
     // Redefining a method of the mocked users service so we can test for the error
+    // We need the users service find method to return a non-empty array to mock that there is already a user with a given email
     fakeUsersService.find = () => Promise.resolve([{ id: 1, email: 'test@test.com', password: 'password' } as User]);
 
+    // From jest v27 using jest-circus => test functions cannot both take a 'done' callback and return something. Either use a 'done' callback, or return a promise.
+    // @see https://jestjs.io/es-ES/docs/asynchronous#asyncawait
+    expect.assertions(1);
+    try {
+      await service.signup('test@test.com', 'password');
+    } catch (error) {
+      expect(error.message).toBe('email already in use');
+    }
+  });
 
-    // This format combined with async doesn't work from jest v27 that uses jest-circus (Test functions cannot both take a 'done' callback and return something. Either use a 'done' callback, or return a promise.)
-    // try {
-    //   await service.signup('test@test.com', 'password');
-    // } catch (error) {
-    //   done();
-    // }
-
-    // This is the correct way to do it:
-    service
-      .signup('test@test.com', 'password')
-      .catch(_error => {});
-
-    done();
+  it('throws an error if signin is called with an unused email', async () => {
+    expect.assertions(1);
+    try {
+      await service.signin('test@test.com', 'password');
+    } catch (error) {
+      expect(error.message).toBe('User not found');
+    }
   });
 })
