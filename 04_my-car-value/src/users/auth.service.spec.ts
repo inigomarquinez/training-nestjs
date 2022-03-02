@@ -54,18 +54,20 @@ describe('AuthService', () => {
   });
 
   it('throws if user signs up with an email that is in use', async () => {
+    // BEFORE the refactor to use intelligent mocks:
     // Redefining a method of the mocked users service so we can test for the error
     // We need the users service find method to return a non-empty array to mock that there is already a user with a given email
-    fakeUsersService.find = () => Promise.resolve([{ id: 1, email: 'test@test.com', password: 'password' } as User]);
+    // fakeUsersService.find = () => Promise.resolve([{ id: 1, email: 'test@test.com', password: 'password' } as User]);
+
+    // AFTER the refactor to use intelligent mocks:
+    await service.signup('test@test.com', 'password');
 
     // From jest v27 using jest-circus => test functions cannot both take a 'done' callback and return something. Either use a 'done' callback, or return a promise.
     // @see https://jestjs.io/es-ES/docs/asynchronous#asyncawait
     expect.assertions(1);
 
     try {
-      // It doesn't matter the email and password. The test will fail because the find method will return a non-empty array,
-      // simulating that there is already a user with the given email
-      await service.signup('another-test@test.com', 'another-password');
+      await service.signup('test@test.com', 'password');
     } catch (error) {
       expect(error.message).toMatch(/email already in use/i);
     }
@@ -82,7 +84,7 @@ describe('AuthService', () => {
   });
 
   it('throws if an invalid password is provided', async () => {
-    fakeUsersService.find = () => Promise.resolve([{ id: 1, email: 'test@test.com', password: 'password' } as User]);
+    await service.signup('test@test.com', 'password');
 
     expect.assertions(1);
 
@@ -97,6 +99,5 @@ describe('AuthService', () => {
     await service.signup('test@test.com', 'password');
     const user = await service.signin('test@test.com', 'password');
     expect(user).toBeDefined();
-
   });
 })
