@@ -17,7 +17,7 @@ const cookieSession = require('cookie-session'); // We need to do a require due 
     ReportsModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'db.sqlite',
+      database: process.env.NODE_ENV === 'test' ? 'test.sqlite' : 'db.sqlite',
       entities: [User, Report],
       // The synchronize feature of TypeORM will take care of updating the database schema.
       // ONLY USE IT IN DEVELOPMENT ENVIRONMENT!!!
